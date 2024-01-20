@@ -100,8 +100,8 @@ class Place(BaseModel, Base):
         def reviews(self):
             """Returns the reviews of this Place"""
             from models import storage
-            reviews_ = []
+            reviews_of_place = []
             for value in storage.all(Review).values():
                 if value.place_id == self.id:
-                    reviews_.append(value)
-            return reviews_
+                    reviews_of_place.append(value)
+            return reviews_of_place
