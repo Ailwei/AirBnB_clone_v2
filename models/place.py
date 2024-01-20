@@ -27,7 +27,7 @@ place_amenity = Table(
         primary_key=True
     )
 )
-"""Representing the many to many relationships of the  table
+"""This Represent the many to many relationships of the  table
 between Place and Amenity records.
 """
 
@@ -91,14 +91,14 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, value):
-            """Adds an amenity to the Place"""
+            """Adds an amenity to the Place class"""
             if type(value) is Amenity:
                 if value.id not in self.amenity_ids:
                     self.amenity_ids.append(value.id)
 
         @property
         def reviews(self):
-            """Returns the reviews of this Place"""
+            """Returning the reviews of this Place"""
             from models import storage
             reviews_of_place = []
             for value in storage.all(Review).values():

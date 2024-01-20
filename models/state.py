@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This is the  is State Module for HBNB project """
+"""This is the State Module for HBNB clone project """
 import os
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship

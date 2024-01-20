@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This is  City Module for the HBNB project """
+"""IT is  City Module for the HBNB project """
 import os
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
