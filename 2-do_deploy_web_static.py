@@ -8,9 +8,10 @@ from fabric.api import env, put, run, sudo
 from os.path import exists
 from datetime import datetime
 
-env.hosts = ['100.26.9.108','34.207.57.168']
+env.hosts = ['100.26.9.108', '34.207.57.168']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/id_rsa'
+
 
 def do_deploy(archive_path):
     """
@@ -35,19 +36,22 @@ def do_deploy(archive_path):
         run("rm /tmp/{}".format(archive_filename))
 
         # Move the contents of extracted folder to the main folder
-        run("mv {}/{}/web_static/* {}/{}".format(releases_path,
-                                                 archive_folder,
-                                                 releases_path, archive_folder))
+        run(
+                "mv {}/{}/web_static/* {}/{}".format(
+                    releases_path, archive_folder,
+                    releases_path, archive_folder)
+                )
 
-         # Delete the now empty web_static folder
         run("rm -rf {}/web_static".format(releases_path, archive_folder))
 
         # Delete the symbolic link /data/web_static/current
         run("rm -rf /data/web_static/current")
 
         # Create a new symbolic link /data/web_static/current
-        run("ln -s {}/{}/ /data/web_static/current".format(releases_path,
-                                                            archive_folder))
+        run(
+                "ln -s {}/{}/ /data/web_static/current".format(
+                    releases_path, archive_folder)
+                )
 
         print("New version deployed!")
         return True
