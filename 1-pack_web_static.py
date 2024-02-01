@@ -8,7 +8,6 @@ from fabric.api import local
 from datetime import datetime
 
 
-
 def do_pack():
     """
     create a .tg achive from contents of the web_static
@@ -26,12 +25,9 @@ def do_pack():
         archive_path = "versions/web_static_{}.tgz".format(timestamp)
         local("tar -cvf {} web_static".format(archive_path))
 
-        print("web_static packed: {} -> {}Bytes".format
-                (
+        print("web_static packed: {} -> {}Bytes".format(
                     archive_path,
-                    local("wc -c < {}"
-                        .format(archive_path),
-                        capture=True)))
+                    local("wc -c < {}".format(archive_path), capture=True)))
         return archive_path
     except Exception as e:
         return None
