@@ -1,33 +1,30 @@
 #!/usr/bin/python3
-"""
-Fbaric script to generate a .tg archieve from fromthe contents of web_satic
-folder of your AirbNb CLONE REPO, USING THE FUNCTION DO_PACK
-"""
-
-from fabric.api import local
+"""A module for Fabric script that generates a .tgz archive."""
+import os
 from datetime import datetime
+from fabric.api import local, runs_once, settings
 
-
+@runs_once
 def do_pack():
-    """
-    create a .tg achive from contents of the web_static
-    The archieve is stored in the versions folder with a timestamp
-    returns the archieve path if successfuk or else return None
-    """
+    """Archives the static files."""
+    if not os.path.isdir("versions"):
+        os.mkdir("versions")
+    date_time = datetime.now()
+    out_put = os.path.join("versions", "web_static_{}{}{}{}{}{}.tgz".format(
+        date_time.year,
+        date_time.month,
+        date_time.day,
+        date_time.hour,
+        date_time.minute,
+        date_time.second
+    ))
     try:
-        # Create the versions directory if it does not exists
-        local("mkdir -p versions")
-
-        # Generate timestamp for the archiebve
-        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
-
-        # Create the archieve
-        archive_path = "versions/web_static_{}.tgz".format(timestamp)
-        local("tar -cvf {} web_static".format(archive_path))
-
-        print("web_static packed: {} -> {}Bytes".format(
-                    archive_path,
-                    local("wc -c < {}".format(archive_path), capture=True)))
-        return archive_path
+        print("Packing web_static to {}".format(out_put))
+        with settings(warn_only=True):
+            local("tar -cvzf {} web_static".format(out_put))
+        size = os.stat(out_put).st_size
+        print("web_static packed: {} -> {} Bytes".format(out_put, size))
     except Exception as e:
-        return None
+        print("Error: {}".format(e))
+        out_put = None
+    return out_put
