@@ -1,42 +1,32 @@
 #!/usr/bin/env bash
-#script that set the servers for deployment of we_static
+# Bash script that sets up web servers for the deployment of web_static
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
 
-if ! command -v nginx &> /dev/null
-then
-    sudo apt-get update
-    sudo apt-get -y install nginx
-fi
+# Create directory
 
-# Define the folders
-folders=("/data" "/data/web_static" "/data/web_static/releases" "/data/web_static/shared" "/data/web_static/releases/test")
+sudo mkdir -p /data/
+sudo mkdir -p /data/web_static/
+sudo mkdir -p /data/web_static/releases/
+sudo mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/
+sudo touch /data/web_static/releases/test/index.html
 
-# Create necessary folders if they don't exist
-for folder in "${folders[@]}"
-do
-    if [ ! -d "$folder" ]; then
-        sudo mkdir -p "$folder"
-    fi
-done
+# creating html link
 
-# Create a fake HTML file
-echo "<html>
+sudo echo "<html>
   <head>
   </head>
   <body>
     Holberton School
   </body>
-</html>" | sudo tee /data/web_static/releases/test/index.html > /dev/null
+</html>" | sudo tee /data/web_static/releases/test/index.html
 
-# Create symbolic link, delete if already exists
-sudo ln -sf /data/web_static/releases/test /data/web_static/current
+sudo ln -s -f /data/web_static/releases/test/ /data/web_static/current
 
-# Give ownership to the current user and group recursively
-sudo chown -R $USER:$USER /data/
+sudo chown -R ubuntu:ubuntu /data/
 
-# Update Nginx configuration
-sudo sed -i '#/location /hbnb_static/ { s#alias .*#alias /data/web_static/current/; }#' /etc/nginx/sites-available/default
+sudo sed -i '/listen 80 default_server/a location /hbnb_static { alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
 
-# Restart Nginx
 sudo service nginx restart
-
-exit 0
