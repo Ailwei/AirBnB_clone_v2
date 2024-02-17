@@ -16,12 +16,14 @@ def teardown_appcontext(exception):
     """
     storage.close()
 
+
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
     """
     """
     states = sorted(staorage.all("State").values(), key=lambda x: x.name)
     return render_template('cities_by_states.html', states=states)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
