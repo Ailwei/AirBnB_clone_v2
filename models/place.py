@@ -34,12 +34,12 @@ between Place and Amenity records.
 
 class Place(BaseModel, Base):
     """ A place to stay """
-    __tablename__ = 'places'
+    __tablename__ = 'place'
     id = Column(String(60), primary_key=True)
-    city_id = Column(String(60), ForeignKey('cities.id'), nullable=False
+    city_id = Column(String(60), ForeignKey('city.id'), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     user_id = Column(
-        String(60), ForeignKey('users.id'), nullable=False
+        String(60), ForeignKey('user.id'), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     name = Column(
         String(128), nullable=False
@@ -72,7 +72,7 @@ class Place(BaseModel, Base):
         backref='place'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        amenities = relationship(
+        amenity = relationship(
             'Amenity',
             secondary=place_amenity,
             viewonly=False,

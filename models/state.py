@@ -10,13 +10,13 @@ from models.city import City
 
 class State(BaseModel, Base):
     """This is the  State class """
-    __tablename__ = 'states'
+    __tablename__ = 'state'
     id = Column(String(60), primary_key=True)
     name = Column(
         String(128), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        cities = relationship(
+        city = relationship(
             'City',
             cascade='all, delete, delete-orphan',
             backref='state'
