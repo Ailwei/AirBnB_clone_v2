@@ -35,8 +35,8 @@ between Place and Amenity records.
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
-    city_id = Column(
-        String(60), ForeignKey('cities.id'), nullable=False
+    id = Column(String(60), primary_key=True)
+    city_id = Column(String(60), ForeignKey('cities.id'), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     user_id = Column(
         String(60), ForeignKey('users.id'), nullable=False

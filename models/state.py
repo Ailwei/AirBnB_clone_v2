@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This is the State Module for HBNB clone project """
 import os
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
 
 from models.base_model import BaseModel, Base
@@ -11,6 +11,7 @@ from models.city import City
 class State(BaseModel, Base):
     """This is the  State class """
     __tablename__ = 'states'
+    id = Column(String(60), primary_key=True)
     name = Column(
         String(128), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
