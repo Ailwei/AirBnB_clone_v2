@@ -9,20 +9,20 @@ from models.review import Review
 from models.amenity import Amenity
 
 
-place_amenity = Table(
-    'place_amenity',
+PlaceAmenity = Table(
+    'PlaceAmenity',
     Base.metadata,
     Column(
         'place_id',
         String(60),
-        ForeignKey('places.id'),
+        ForeignKey('Place.id'),
         nullable=False,
         primary_key=True
     ),
     Column(
         'amenity_id',
         String(60),
-        ForeignKey('amenities.id'),
+        ForeignKey('Amenity.id'),
         nullable=False,
         primary_key=True
     )
@@ -74,7 +74,7 @@ class Place(BaseModel, Base):
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         amenity = relationship(
             'Amenity',
-            secondary=place_amenity,
+            secondary=PlaceAmenity,
             viewonly=False,
             backref='PlaceAmenity'
         )

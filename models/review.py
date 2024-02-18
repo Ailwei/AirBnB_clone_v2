@@ -11,10 +11,10 @@ class Review(BaseModel, Base):
     """ Review class to save the review information """
     __tablename__ = 'review'
     place_id = Column(
-        String(60), ForeignKey('place.id'), nullable=False
+        String(60), ForeignKey('Place.id'), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     user_id = Column(
-        String(60), ForeignKey('user.id'), nullable=False
+        String(60), ForeignKey('User.id'), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     text = Column(
         String(1024), nullable=False
