@@ -9,7 +9,7 @@ from models.base_model import BaseModel, Base
 
 class User(BaseModel, Base):
     """This class defines the user by various attributes"""
-    __tablename__ = 'user'
+    __tablename__ = 'User'
     email = Column(
         String(128), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
@@ -25,10 +25,10 @@ class User(BaseModel, Base):
     places = relationship(
         'Place',
         cascade="all, delete, delete-orphan",
-        backref='user'
+        backref='User'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
     reviews = relationship(
         'Review',
         cascade="all, delete, delete-orphan",
-        backref='user'
+        backref='User'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None

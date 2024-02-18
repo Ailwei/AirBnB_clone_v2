@@ -10,7 +10,7 @@ from models.city import City
 
 class State(BaseModel, Base):
     """This is the  State class """
-    __tablename__ = 'state'
+    __tablename__ = 'State'
     id = Column(String(60), primary_key=True)
     name = Column(
         String(128), nullable=False
@@ -19,7 +19,7 @@ class State(BaseModel, Base):
         city = relationship(
             'City',
             cascade='all, delete, delete-orphan',
-            backref='state'
+            backref='State'
         )
     else:
         @property

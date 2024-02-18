@@ -4,7 +4,7 @@ Script that starts a Flask web application
 """
 
 from flask import Flask, render_template
-from models import storage
+#from models import storage
 from models.state import State
 
 
@@ -17,7 +17,7 @@ def teardown_appcontext(exception):
     Teardown application context
     """
     storage.close()
-
+from models import storage
 
 @app.route('/states', strict_slashes=False)
 def states_list():
@@ -25,8 +25,8 @@ def states_list():
     Display a HTML page with the list of all State objects
     """
 
-states = sorted(list(storage.all(Storage).values()), key=lambda x: x.name)
-return render_template('9-states.html', states=states)
+    states = sorted(list(storage.all(Storage).values()), key=lambda x: x.name)
+    return render_template('9-states.html', states=states)
 
 
 @app.route('/states/<id>', strict_slashes=False)

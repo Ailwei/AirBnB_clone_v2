@@ -9,18 +9,18 @@ from models.base_model import BaseModel, Base
 
 class City(BaseModel, Base):
     """ The city class, contains state ID and name """
-    __tablename__ = 'city'
+    __tablename__ = 'City'
     id = Column(String(60), primary_key=True)
     state_id = Column(
-           String(60), ForeignKey('state.id'), nullable=False)
+           String(60), ForeignKey('State.id'), nullable=False)
     name = Column(
         String(128), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     state_id = Column(
-        Integer, ForeignKey('state.id'), nullable=False
+        Integer, ForeignKey('State.id'), nullable=False
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
     places = relationship(
         'Place',
         cascade='all, delete, delete-orphan',
-        backref='city'
+        backref='City'
     ) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else None
